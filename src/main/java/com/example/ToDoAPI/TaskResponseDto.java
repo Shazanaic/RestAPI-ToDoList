@@ -5,12 +5,12 @@ public class TaskResponseDto {
     private String id;
     private String title;
     private String description;
-    private String status;
+    private TaskStatus status;
 
     public TaskResponseDto() {
     }
 
-    public TaskResponseDto(String id, String title, String description, String status) {
+    public TaskResponseDto(String id, String title, String description, TaskStatus status) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -41,11 +41,11 @@ public class TaskResponseDto {
         this.description = description;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 }

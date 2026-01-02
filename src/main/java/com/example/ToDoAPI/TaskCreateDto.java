@@ -1,6 +1,7 @@
 package com.example.ToDoAPI;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class TaskCreateDto {
@@ -12,8 +13,8 @@ public class TaskCreateDto {
     @Size(max = 1000, message = "Description must not exceed 1000 characters")
     private String description;
 
-    @NotBlank(message = "Status is required")
-    private String status;
+    @NotNull(message = "Status is required")
+    private TaskStatus status;
 
     public TaskCreateDto() {
     }
@@ -34,11 +35,11 @@ public class TaskCreateDto {
         this.description = description;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 }

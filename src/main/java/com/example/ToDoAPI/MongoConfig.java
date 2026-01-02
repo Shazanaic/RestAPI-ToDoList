@@ -25,14 +25,9 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     @Bean
     public MongoClient mongoClient() {
 
-        ServerApi serverApi = ServerApi.builder()
-                .version(ServerApiVersion.V1)
-                .build();
+        ServerApi serverApi = ServerApi.builder().version(ServerApiVersion.V1).build();
 
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(new ConnectionString(CONNECTION_STRING))
-                .serverApi(serverApi)
-                .build();
+        MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(new ConnectionString(CONNECTION_STRING)).serverApi(serverApi).build();
 
         return MongoClients.create(settings);
     }
