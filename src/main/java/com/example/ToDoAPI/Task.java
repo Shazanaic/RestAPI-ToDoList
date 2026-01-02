@@ -1,8 +1,11 @@
-package com.example.demo;
+package com.example.ToDoAPI;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+@Document(collection = "tasks")
 public class Task {
-
-    private Long id;
+    @Id
+    private String id;
     private String title;
     private String description;
     private String status;
@@ -16,11 +19,11 @@ public class Task {
         this.status = status;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
