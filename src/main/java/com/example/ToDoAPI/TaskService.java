@@ -14,16 +14,26 @@ public class TaskService {
         this.repository = repository;
     }
 
-    public List<Task> findAll() {
-        return repository.findAll();
+    public List<TaskResponseDto> findAll() {
+        return repository.findAll()
+                .stream()
+                .map(this::toResponseDto)
+                .toList();
     }
 
-    public Task create(Task task) {
-        return repository.save(task);
+    public TaskResponseDto create(TaskCreateDto dto) {
+        Task task = new Task();
+        task.setTitle(dto.getTitle());
+        task.setDescription(dto.getDescription());
+        task.setStatus(dto.getStatus());
+
+        Task saved = repository.save(task);
+        return toResponseDto(saved);
     }
 
-    public Optional<Task> findById(String id) {
-        return repository.findById(id);
+    public Optional<TaskResponseDto> findById(String id) {
+        return repository.findById(id)
+                .map(this::toResponseDto);
     }
 
     public boolean deleteById(String id) {
@@ -32,5 +42,14 @@ public class TaskService {
         }
         repository.deleteById(id);
         return true;
+    }
+
+    private TaskResponseDto toResponseDto(Task task) {
+        return new TaskResponseDto(
+                task.getId(),
+                task.getTitle(),
+                task.getDescription(),
+                task.getStatus()
+        );
     }
 }

@@ -1,5 +1,6 @@
 package com.example.ToDoAPI;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,18 +18,20 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> getAll() {
+    public List<TaskResponseDto> getAll() {
         return service.findAll();
     }
 
     @PostMapping
-    public ResponseEntity<Task> create(@RequestBody Task task) {
-        Task saved = service.create(task);
+    public ResponseEntity<TaskResponseDto> create(
+            @Valid @RequestBody TaskCreateDto dto
+    ) {
+        TaskResponseDto saved = service.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> getById(@PathVariable String id) {
+    public ResponseEntity<TaskResponseDto> getById(@PathVariable String id) {
         return service.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
