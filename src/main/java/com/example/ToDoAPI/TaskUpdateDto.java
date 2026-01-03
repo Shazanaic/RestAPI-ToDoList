@@ -1,9 +1,10 @@
 package com.example.ToDoAPI;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class TaskCreateDto {
+public class TaskUpdateDto {
 
     @NotBlank(message = "Title must not be empty")
     @Size(max = 300, message = "Title must not exceed 300 characters")
@@ -12,9 +13,10 @@ public class TaskCreateDto {
     @Size(max = 1000, message = "Description must not exceed 1000 characters")
     private String description;
 
+    @NotNull(message = "Status is required")
     private TaskStatus status;
 
-    public TaskCreateDto() {}
+    public TaskUpdateDto() {}
 
     public String getTitle() {
         return title;

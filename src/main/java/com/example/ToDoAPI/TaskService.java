@@ -25,10 +25,23 @@ public class TaskService {
         Task task = new Task();
         task.setTitle(dto.getTitle());
         task.setDescription(dto.getDescription());
-        task.setStatus(dto.getStatus());
+        task.setStatus(
+                dto.getStatus() != null ? dto.getStatus() : TaskStatus.TODO
+        );
 
         Task saved = repository.save(task);
         return toResponseDto(saved);
+    }
+
+    public Optional<TaskResponseDto> update(String id, TaskUpdateDto dto) {
+        return repository.findById(id).map(task -> {
+            task.setTitle(dto.getTitle());
+            task.setDescription(dto.getDescription());
+            task.setStatus(dto.getStatus());
+
+            Task saved = repository.save(task);
+            return toResponseDto(saved);
+        });
     }
 
     public Optional<TaskResponseDto> findById(String id) {

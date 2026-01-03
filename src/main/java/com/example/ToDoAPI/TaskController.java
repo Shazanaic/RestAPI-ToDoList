@@ -30,6 +30,16 @@ public class TaskController {
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<TaskResponseDto> update(
+            @PathVariable String id,
+            @Valid @RequestBody TaskUpdateDto dto
+    ) {
+        return service.update(id, dto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponseDto> getById(@PathVariable String id) {
         return service.findById(id)
