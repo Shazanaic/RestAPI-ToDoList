@@ -6,6 +6,7 @@ import com.mongodb.ServerApi;
 import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
@@ -13,8 +14,8 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 @Configuration
 public class MongoConfig extends AbstractMongoClientConfiguration {
 
-    private static final String CONNECTION_STRING =
-            "mongodb+srv://orlevicu_db_user:yBqYpUP5W9sGCncX@to-do-list-api.ut4dknd.mongodb.net";
+    @Value("${spring.data.mongodb.uri}")
+    private String CONNECTION_STRING;
 
     @Override
     protected String getDatabaseName() {
