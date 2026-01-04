@@ -1,5 +1,7 @@
 package com.example.ToDoAPI;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,7 @@ public class TaskService {
         this.repository = repository;
     }
 
+    @Cacheable("tasks")
     public List<TaskResponseDto> findAll() {
         return repository.findAll()
                 .stream()
@@ -21,6 +24,13 @@ public class TaskService {
                 .toList();
     }
 
+    @Cacheable(value = "taskById", key = "#id")
+    public Optional<TaskResponseDto> findById(String id) {
+        return repository.findById(id)
+                .map(this::toResponseDto);
+    }
+
+    @CacheEvict(value = {"tasks", "taskById"}, allEntries = true)
     public TaskResponseDto create(TaskCreateDto dto) {
         Task task = new Task();
         task.setTitle(dto.getTitle());
@@ -33,6 +43,7 @@ public class TaskService {
         return toResponseDto(saved);
     }
 
+    @CacheEvict(value = {"tasks", "taskById"}, allEntries = true)
     public Optional<TaskResponseDto> update(String id, TaskUpdateDto dto) {
         return repository.findById(id).map(task -> {
             task.setTitle(dto.getTitle());
@@ -44,11 +55,7 @@ public class TaskService {
         });
     }
 
-    public Optional<TaskResponseDto> findById(String id) {
-        return repository.findById(id)
-                .map(this::toResponseDto);
-    }
-
+    @CacheEvict(value = {"tasks", "taskById"}, allEntries = true)
     public boolean deleteById(String id) {
         if (!repository.existsById(id)) {
             return false;
