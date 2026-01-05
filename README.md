@@ -3,11 +3,12 @@
 ## 🚀 Stack
 
 ### Backend
-- **Java 17**
+- **Java 21**
 - **Spring Boot**
 - **Spring Web**
 - **Spring Data MongoDB**
 - **Spring Validation**
+- **Spring Security**
 - **Spring Cache**
 
 ### Database & Infrastructure
